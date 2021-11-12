@@ -64,7 +64,7 @@ module.exports = function () {
                 } else {
                     const accessToken = response.body.access_token;
                     res.cookie(configs.cookieName, { accessToken: accessToken }, configs.cookieOptions);
-                    res.redirect('/?authenticationType=oauth');
+                    res.redirect('/bsi/?authenticationType=oauth');
                 }
             });
     });

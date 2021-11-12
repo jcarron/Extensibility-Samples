@@ -25,7 +25,7 @@ module.exports = function (appContext) {
         const callbackRoute = req.url;
         const userContext = appContext.createUserContext(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, callbackRoute);
         res.cookie(configs.cookieName, { userKey: userContext.userKey, userId: userContext.userId }, configs.cookieOptions);
-        res.redirect('/?authenticationType=idkeyauth');
+        res.redirect('/bsi/?authenticationType=idkeyauth');
     });
 
     return router;

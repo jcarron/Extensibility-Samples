@@ -70,10 +70,10 @@ module.exports = {
     },
 
     getRedirectUri: function(req) {
-        return req.protocol + '://' + req.headers.host + '/oauthcallback';
+        return req.protocol + '://' + req.headers.host + '/bsi/oauthcallback';
     },
 
     getIdKeyRedirectUri: function(req) {
-        return req.protocol + '://' + req.headers.host + '/idkeycallback';
+        return req.protocol + '://' + req.headers.host + '/bsi/idkeycallback';
     }
 }; 
