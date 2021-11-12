@@ -75,8 +75,13 @@ module.exports = function (appContext) {
                         .set('Authorization', `Bearer ${accessToken}`)
                         .end(function(error, response) {
                             if (error) {
-                                console.log('Error calling the Final Grades route', error);
-                                callback({message: 'Error calling the Final Grades Route'});
+								if (response.text == "Not Found") {
+									finalGradeBlocks.push({ FinalGrade: "empty - null grade", User: user });
+									callback(null);
+								} else {
+									console.log('Error calling the Final Grades route', error);
+									callback({message: 'Error calling the Final Grades Route', response: response});
+								}
                             } else if(response.statusCode !== 200) {
                                 if(response.statusCode === 404){
                                     finalGradeBlocks.push({ FinalGrade: {}, User: user });
@@ -96,8 +101,13 @@ module.exports = function (appContext) {
                         .get( gradesRoute )
                         .end(function(error, response) {
                             if (error) {
-                                console.log('Error calling the Final Grades route', error);
-                                callback({message: 'Error calling the Final Grades Route'});
+								if (response.text == "Not Found") {
+									finalGradeBlocks.push({ FinalGrade: "empty - null grade", User: user });
+									callback(null);
+								} else {
+									console.log('Error calling the Final Grades route', error);
+									callback({message: 'Error calling the Final Grades Route', response: response});							
+								}
                             } else if(response.statusCode !== 200) {
                                 if(response.statusCode === 404){
                                     finalGradeBlocks.push({ FinalGrade: {}, User: user });

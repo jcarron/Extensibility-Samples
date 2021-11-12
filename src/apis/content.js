@@ -7,7 +7,7 @@ const fs = require('fs'),
       express = require('express'),
       router = express.Router();
 
-module.exports = function (appContext) {
+module.exports = function (appContext, rootDirectory) {
 
     /* GET /uploadhtmlcontent
     *  Uploads an HTML document to a module within the given course. The OrgUnitId and ModuleId are parameters
@@ -17,15 +17,15 @@ module.exports = function (appContext) {
 
         const orgUnitId = req.query.orgUnitId;
         const moduleId = req.query.moduleId;
-        const apiPath = '/d2l/api/le/1.22/' + orgUnitId + '/content/modules/' + moduleId + '/structure/';
+        const apiPath = '/d2l/api/le/1.59/' + orgUnitId + '/content/modules/' + moduleId + '/structure/';
         const accessToken = req.cookies[configs.cookieName].accessToken;
         const boundary = 'xxBOUNDARYxx';
         const topicData = {
             Title: 'Sample HTML Content',
-            ShortTitle: null,
+            ShortTitle: 'Sample HTML Content',
             Type: 1,
-            TopicType: 1,
-            Url: '/content/enforced/6952-ES100/sample-content.html',
+			TopicType: 1,
+            Url: '/content/enforced/15914633-BL_1920Sem2__CS_ICS4UE-813389_66_ELO/sample-content.html',
             StartDate: null,
             EndDate: null,
             DueDate: null,
@@ -34,10 +34,11 @@ module.exports = function (appContext) {
             OpenAsExternalResource: null,
             Description: null,
             MajorUpdate: null,
-            MajorUpdateText: null,
-            ResetCompletionTracking: null
+            MajorUpdateText: "null",
+            ResetCompletionTracking: null,
+			Duration: null
         };
-        const body = buildMultipartBody(boundary, topicData, './content/file-upload/sample-content.html', 'sample-content.html', 'text/html', 'utf8');  
+        const body = buildMultipartBody(boundary, topicData, rootDirectory + '/content/file-upload/sample-content.html', 'sample-content.html', 'text/html', 'utf8');  
 
         if (accessToken) {
             console.log('Attempting to upload content using OAuth 2.0 authentication.');
@@ -89,7 +90,7 @@ module.exports = function (appContext) {
 
         const orgUnitId = req.query.orgUnitId;
         const moduleId = req.query.moduleId;
-        const apiPath = '/d2l/api/le/1.22/' + orgUnitId + '/content/modules/' + moduleId + '/structure/';
+        const apiPath = '/d2l/api/le/1.59/' + orgUnitId + '/content/modules/' + moduleId + '/structure/';
         const accessToken = req.cookies[configs.cookieName].accessToken;
         const boundary = 'xxBOUNDARYxx';
         const topicData = {
@@ -97,7 +98,7 @@ module.exports = function (appContext) {
             ShortTitle: null,
             Type: 1,
             TopicType: 1,
-            Url: '/content/enforced/6952-ES100/sample-content.docx',
+            Url: '/content/enforced/15914633-BL_1920Sem2__CS_ICS4UE-813389_66_ELO/sample-content.docx',
             StartDate: null,
             EndDate: null,
             DueDate: null,
@@ -110,7 +111,7 @@ module.exports = function (appContext) {
             ResetCompletionTracking: null
         };
 
-        const body = buildMultipartBody(boundary, topicData, './content/file-upload/sample-content.docx', 'sample-content.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        const body = buildMultipartBody(boundary, topicData, rootDirectory + '/content/file-upload/sample-content.docx', 'sample-content.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'base64');
 
         if (accessToken) {
             console.log('Attempting to make the Content Creation route call using OAuth 2.0 authentication.');
@@ -175,7 +176,8 @@ module.exports = function (appContext) {
         content += 'Content-Disposition: form-data; name=""; filename="' + fileName + '"' + newLine;
         content += 'Content-Type: ' + fileContentType + newLine + newLine;
 
-        const text = fileEncoding ? 
+        
+		const text = (fileEncoding == 'base64') ? 
             fs.readFileSync(filePath,'base64') : 
             fs.readFileSync(filePath).toString('utf8');
 

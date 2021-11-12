@@ -21,7 +21,7 @@ module.exports = function (appContext, rootDirectory) {
             const uploadProfileImage = helpers.createUrl(apiPath, configs);
             request
                 .post( uploadProfileImage )
-                .attach('profileImage', rootDirectory + '/content/profile/profileImage.png')
+                .attach('profileImage', rootDirectory + '/content/profile/profileImage1.png')
                 .set('Authorization', `Bearer ${accessToken}`)
                 .end(function(error, response) {
                      if (error) {
@@ -41,7 +41,7 @@ module.exports = function (appContext, rootDirectory) {
             const apiCallUrl = userContext.createAuthenticatedUrl(apiPath, 'POST');
             request
                 .post( apiCallUrl )
-                .attach('profileImage', rootDirectory + '/content/profile/profileImage.png')
+                .attach('profileImage', rootDirectory + '/content/profile/profileImage2.png')
                 .end(function(error, response) {
                     if (error) {
                         console.log('Error calling the who am I route', error);
