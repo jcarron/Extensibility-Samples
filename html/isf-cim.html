@@ -7,8 +7,8 @@
     </head>
     <body>
         <h3>Select a logo:</h3>
-        <input type="radio" name="image" value="brightspace-logo.png"> <img src="../content/isf/brightspace-logo.png" alt="Brightspace Logo"><br />
-        <input type="radio" name="image" value="d2l-logo.png"> <img src="../content/isf/d2l-logo.png" alt="D2L Logo"><br />
+        <input type="radio" name="image" value="brightspace-logo.png"> <img src="../bsi/content/isf/brightspace-logo.png" alt="Brightspace Logo"><br />
+        <input type="radio" name="image" value="d2l-logo.png"> <img src="../bsi/content/isf/d2l-logo.png" alt="D2L Logo"><br />
         <div hidden>
             <form id="isfForm" method="POST">
                 <input type="hidden" name="lti_message_type" />
@@ -30,7 +30,7 @@
         $( document ).ready(function() {
             $('#submitFormButton').click( function() {
                  $.ajax({
-                    url: "/getisfdetails",
+                    url: "/bsi/getisfdetails",
                     data: {
                         image: $("input[name='image']:checked").val()
                     },

@@ -9,6 +9,7 @@ const
     cookieParser = require('cookie-parser'),
     configs = require('./src/configurations'),
     path = require('path'),
+	cors = require('cors'),
     app = express();
 
 const credentials = {
@@ -17,6 +18,7 @@ const credentials = {
   key: fs.readFileSync(path.resolve(__dirname, "../../ssl.key"), 'utf8')
 };
 
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -37,6 +39,7 @@ app.use(require('./src/apis/profileimage')(appContext, __dirname));
 app.use(require('./src/remote-plugins/isf-cim')(appContext, __dirname));
 app.use(require('./src/remote-plugins/quicklink-cim')(appContext, __dirname));
 app.use(require('./src/remote-plugins/courseimport-cim')(appContext, __dirname));
+app.use(require('./src/remote-plugins/cookietest')(appContext, __dirname));
 require('./src/remote-plugins/statics.js')(app, __dirname);
 
 /* GET /
@@ -49,6 +52,8 @@ app.get('/', function(req, res) {
 module.exports = app;
 //var httpsServer = https.createServer(credentials, app);
 //app.listen(configs.configuredPort);
+
+
 https.createServer(credentials, app).listen(configs.configuredPort);
 //httpsServer.listen(configs.configuredPort);
 console.log(`HTTPS started on port ${configs.configuredPort}`);

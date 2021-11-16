@@ -33,11 +33,11 @@ module.exports = {
     clientSecret: process.env.CLIENT_SECRET || 'm8O7ZvEDLsIRixhKdh2r9TPyPt1rC_auqwiM5FGgaLc',
     configuredPort:  process.env.TOKEN_CONFIGURED_PORT || 3434,
     cookieName: process.env.COOKIE_NAME || 'sampleAppCookie',
-    cookieOptions: { httpOnly: true, secure: true },
+    cookieOptions: { httpOnly: true, secure: true , sameSite: 'none'},
     instanceScheme: process.env.INSTANCE_SCHEME || 'https:',
     instancePort: process.env.INSTANCE_PORT || '443',
     instanceUrl: process.env.INSTANCE_URL || 'smcdsbtest.desire2learn.com',
     ltiSecret: process.env.LTI_SECRET || 'secret',
-    state: process.env.STATE || 'ed9dda12-1397-4bac-aba2-096acc7d24f1',
+    state: process.env.STATE || 'bb426934-19fe-435d-8936-0226d4964cee',
     tokenEndpoint: process.env.TOKEN_ENDPOINT || 'https://auth.brightspace.com/core/connect/token'
 };

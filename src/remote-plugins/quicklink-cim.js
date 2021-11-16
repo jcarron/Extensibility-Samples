@@ -13,6 +13,7 @@ module.exports = function (appContext, directory) {
     *  Returns the quicklink-cim html page for presentation to the user within Brightspace.
     */
     router.get('/quicklinkselection', function(req, res) {
+		//console.log(req)
         res.sendFile(path.join(directory+'/html/quicklink-cim.html'));
     });
 
@@ -20,7 +21,7 @@ module.exports = function (appContext, directory) {
     *  The LTI endpoint for a Quicklink (CIM) remote plugin.
     */
     router.post('/lti/quicklinkcontent', function (req, res) {
-        const url = req.protocol + '://' + req.get('host') + '/lti/quicklinkcontent';
+        const url = req.protocol + '://' + req.get('host') + '/bsi/lti/quicklinkcontent';
         if (!helpers.verifyLtiRequest(url, req.body, configs.ltiSecret)) {
             console.log('Could not verify the LTI Request. OAuth 1.0 Validation Failed');
             res.status(500).send({error: 'Could not verify the LTI Request. OAuth 1.0 Validation Failed'});
@@ -33,7 +34,8 @@ module.exports = function (appContext, directory) {
                 oauth_callback: req.body.oauth_callback,
                 oauth_signature_method: req.body.oauth_signature_method
             }, configs.cookieOptions);
-            res.redirect('/quicklinkselection');      
+			//console.log(res)
+            res.redirect('https://www.jcarron.ca/bsi/quicklinkselection');      
         }
     });
 
@@ -42,7 +44,8 @@ module.exports = function (appContext, directory) {
     *  to Brightspace in order to add the content.
     */
     router.get('/getquicklinkdetails', function (req, res) {
-        const fileUrl = req.protocol + '://' + req.get('host') + '/content/quicklink/' + req.query.link;
+        const fileUrl = req.protocol + '://' + req.get('host') + '/bsi/content/quicklink/' + req.query.link;
+		//console.log(req);
         const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
         const contentItems = {
@@ -74,6 +77,7 @@ module.exports = function (appContext, directory) {
             oauth_callback: req.cookies['lti-request'].oauth_callback,
             oauth_signature_method: req.cookies['lti-request'].oauth_signature_method
         };
+		//const contentItemReturnUrl = 'https://smcdsbtest.desire2learn.com/d2l/le/lessons/15914633/topics/167768305'
         responseObject.oauth_signature = helpers.generateAuthSignature(contentItemReturnUrl, responseObject, configs.ltiSecret);
         responseObject.lti_return_url = contentItemReturnUrl;
         res.setHeader('Content-Type', 'application/json');
