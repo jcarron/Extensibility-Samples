@@ -35,7 +35,7 @@ module.exports = function (appContext, directory) {
                 oauth_signature_method: req.body.oauth_signature_method
             }, configs.cookieOptions);
 			//console.log(res)
-            res.redirect('https://www.jcarron.ca/bsi/quicklinkselection');      
+            res.redirect('/bsi/quicklinkselection');      
         }
     });
 

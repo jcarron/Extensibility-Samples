@@ -13,9 +13,9 @@ module.exports = function (appContext, directory) {
     *  Returns the isf-cim html page for presentation to the user within Brightspace.
     */
     router.get('/isfselection', function(req, res) {
-		console.log('in second route: /isfselection');
-		console.log('Cookies: ', req.cookies);
-		console.log('Signed Cookies: ', req.signedCookies);
+		//console.log('in second route: /isfselection');
+		//console.log('Cookies: ', req.cookies);
+		//console.log('Signed Cookies: ', req.signedCookies);
 		
         res.sendFile(path.join(directory+'/html/isf-cim.html'));
 		//console.log(req);
@@ -25,10 +25,10 @@ module.exports = function (appContext, directory) {
     *  The LTI endpoint for a Insert Stuff (CIM) remote plugin.
     */
     router.post('/lti/isfcontent', function (req, res) {
- 		console.log('in first route: /lti/isfcontent');
+ 		//console.log('in first route: /lti/isfcontent');
 		
        	const url = req.protocol + '://' + req.get('host') + '/bsi/lti/isfcontent';
-		console.log('url: ', url);
+		//console.log('url: ', url);
 		
         if (!helpers.verifyLtiRequest(url, req.body, configs.ltiSecret)) {
             console.log('Could not verify the LTI Request. OAuth 1.0 Validation Failed');
@@ -44,8 +44,8 @@ module.exports = function (appContext, directory) {
                 oauth_signature_method: req.body.oauth_signature_method
             }, configs.cookieOptions);
 			
-			console.log('Cookies: ', req.cookies);
-			console.log('Signed Cookies: ', req.signedCookies);
+			//console.log('Cookies: ', req.cookies);
+			//console.log('Signed Cookies: ', req.signedCookies);
             res.redirect('/bsi/isfselection');      
         }
 
@@ -56,12 +56,12 @@ module.exports = function (appContext, directory) {
     *  to Brightspace in order to insert the stuff into Brightspace.
     */
     router.get('/getisfdetails', function (req, res) {
-		console.log('in third (submit) route: /getisfdetails');
+		//console.log('in third (submit) route: /getisfdetails');
 		
         const imageUrl = req.protocol + '://' + req.get('host') + '/bsi/content/isf/' + req.query.image;
-		console.log('imageUrl: ', imageUrl);
-		console.log('Cookies: ', req.cookies);
-		console.log('Signed Cookies: ', req.signedCookies); 				
+		//console.log('imageUrl: ', imageUrl);
+		//console.log('Cookies: ', req.cookies);
+		//console.log('Signed Cookies: ', req.signedCookies); 				
 		
         const contentItemReturnUrl = req.cookies.lti_request.contentItemReturnUrl;
 		
@@ -98,8 +98,8 @@ module.exports = function (appContext, directory) {
         responseObject.oauth_signature = helpers.generateAuthSignature(contentItemReturnUrl, responseObject, configs.ltiSecret);
         responseObject.lti_return_url = contentItemReturnUrl;
 		
-		console.log('Cookies: ', req.cookies);
-		console.log('Signed Cookies: ', req.signedCookies); 				
+		//console.log('Cookies: ', req.cookies);
+		//console.log('Signed Cookies: ', req.signedCookies); 				
 
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(responseObject));

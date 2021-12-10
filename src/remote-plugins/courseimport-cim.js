@@ -21,7 +21,8 @@ module.exports = function (appContext, directory) {
     *  The LTI endpoint for a Course Import (CIM) remote plugin.
     */
     router.post('/lti/courseimport', function (req, res) {
-        const url = req.protocol + '://' + req.get('host') + '/lti/courseimport';
+        const url = req.protocol + '://' + req.get('host') + '/bsi/lti/courseimport';
+		//console.log('url: ', url);
         if (!helpers.verifyLtiRequest(url, req.body, configs.ltiSecret)) {
             console.log('Could not verify the LTI Request. OAuth 1.0 Validation Failed');
             res.status(500).send({error: 'Could not verify the LTI Request. OAuth 1.0 Validation Failed'});
@@ -34,7 +35,7 @@ module.exports = function (appContext, directory) {
                 oauth_callback: req.body.oauth_callback,
                 oauth_signature_method: req.body.oauth_signature_method
             }, configs.cookieOptions);
-            res.redirect('/courseimportselection');      
+            res.redirect('/bsi/courseimportselection');      
         }
     });
 
@@ -45,7 +46,7 @@ module.exports = function (appContext, directory) {
     router.get('/getcourseimportdetails', function (req, res) {
         // Generate the url to the package based on the user's selection, sent through the query param named
         // package.
-        const fileUrl = 'https://github.com/Brightspace/Extensibility-Samples/raw/master/content/importpackage/' + req.query.package;
+        const fileUrl = 'https://www.jcarron.ca/bsi/content/importpackage/' + req.query.package;
         const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
         const contentItems = {

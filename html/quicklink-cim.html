@@ -30,7 +30,7 @@
         $( document ).ready(function() {
             $('#submitFormButton').click( function() {
                  $.ajax({
-                    url: "https://www.jcarron.ca/bsi/getquicklinkdetails",
+                    url: "/bsi/getquicklinkdetails",
                     data: {
                         link: $("input[name='link']:checked").val()
                     },
