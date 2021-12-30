@@ -40,6 +40,7 @@ app.use(require('./src/remote-plugins/isf-cim')(appContext, __dirname));
 app.use(require('./src/remote-plugins/quicklink-cim')(appContext, __dirname));
 app.use(require('./src/remote-plugins/courseimport-cim')(appContext, __dirname));
 app.use(require('./src/remote-plugins/cookietest')(appContext, __dirname));
+app.use(require('./src/remote-plugins/isf-button-creator-cim')(appContext, __dirname));
 require('./src/remote-plugins/statics.js')(app, __dirname);
 
 /* GET /
