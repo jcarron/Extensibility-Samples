@@ -38,6 +38,6 @@ module.exports = {
     instancePort: process.env.INSTANCE_PORT || '443',
     instanceUrl: process.env.INSTANCE_URL || 'smcdsbtest.desire2learn.com',
     ltiSecret: process.env.LTI_SECRET || 'secret',
-    state: process.env.STATE || '',
+    state: process.env.STATE || 'bb426934-19fe-435d-8936-0226d4964cee',
     tokenEndpoint: process.env.TOKEN_ENDPOINT || 'https://auth.brightspace.com/core/connect/token'
 };
